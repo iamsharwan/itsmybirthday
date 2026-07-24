@@ -104,15 +104,32 @@ body, html {
 
 /* Gallery Scroll Tweaks */
 .gallery-scroll-wrapper {
-    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+    mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
 }
 
+/* Upgraded 3D Polaroid Styling */
 .gallery-item {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    opacity: 0; /* Hidden initially for GSAP stagger */
+    background: #ffffff; /* White polaroid border */
+    padding: 0.4rem 0.4rem 1.5rem 0.4rem; /* Bottom padding for polaroid look */
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    opacity: 0; /* Hidden initially for the book flip */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+/* The hover pop-out effect */
+.gallery-item:hover {
+    transform: scale(1.15) translateY(-10px) rotate(0deg) !important; /* Forces it straight & large */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 30px rgba(255,215,0,0.3);
+    z-index: 50;
+}
+
+.gallery-item img {
+    border-radius: 2px;
 }
 
 /* Cake */
