@@ -229,11 +229,36 @@ function nextScreen(targetId, onCompleteCallback) {
 
                 gsap.fromTo(nextEl, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out", onComplete: onCompleteCallback });
 
+                // DYNAMIC 3D BOOK FLIP ENTRY FOR GALLERY
                 if (targetId === 'screen-gallery') {
+                    // Set up perspective for the 3D effect
+                    gsap.set('.gallery-item', { transformPerspective: 1200 });
+                    
                     gsap.fromTo('.gallery-item', 
-                        { scale: 0, rotation: () => gsap.utils.random(-30, 30), opacity: 0, y: 100 },
-                        { scale: 1, rotation: 0, opacity: 1, y: 0, stagger: 0.08, duration: 1.2, ease: 'back.out(1.2)' }
+                        { 
+                            // Even images flip from right, odd images flip from left
+                            rotationY: (i) => i % 2 === 0 ? 90 : -90, 
+                            transformOrigin: (i) => i % 2 === 0 ? "left center" : "right center",
+                            opacity: 0, 
+                            z: -300,
+                            rotationZ: () => gsap.utils.random(-8, 8) // Slight random tilt
+                        },
+                        { 
+                            rotationY: 0, 
+                            opacity: 1, 
+                            z: 0, 
+                            stagger: 0.06, // Deals them out rapidly
+                            duration: 1.5, 
+                            ease: 'expo.out',
+                            onComplete: () => {
+                                // Keeps the random tilt after they land
+                                gsap.set('.gallery-item', { clearProps: "transformOrigin,perspective" });
+                            }
+                        }
                     );
+                    
+                    // Initialize Lightbox Clicks
+                    initLightbox();
                 }
             }
         });
@@ -375,3 +400,47 @@ window.addEventListener('keydown', (e) => {
 });
 
 window.onload = () => init3DWorld();
+
+/* =========================================================
+   LIGHTBOX LOGIC
+   ========================================================= */
+function initLightbox() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            playChimeSFX(700);
+            const img = item.querySelector('img');
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            
+            lbImg.src = img.src;
+            lb.classList.remove('hidden');
+            lb.classList.add('flex');
+            
+            // Pop open animation
+            if (window.gsap) {
+                gsap.fromTo(lbImg, 
+                    { scale: 0.5, opacity: 0, rotationY: 45 }, 
+                    { scale: 1, opacity: 1, rotationY: 0, duration: 0.6, ease: 'back.out(1.2)' }
+                );
+            }
+        });
+    });
+}
+
+function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    playChimeSFX(400);
+    if (window.gsap) {
+        gsap.to('#lightbox-img', { 
+            scale: 0.8, opacity: 0, duration: 0.3, 
+            onComplete: () => {
+                lb.classList.add('hidden');
+                lb.classList.remove('flex');
+            }
+        });
+    } else {
+        lb.classList.add('hidden');
+        lb.classList.remove('flex');
+    }
+}
