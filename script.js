@@ -3,7 +3,7 @@ let isMuted = false;
 // Custom Music Init
 const customMusic = new Audio('assets/music.mp4'); 
 customMusic.loop = true;
-customMusic.volume = 0.65;
+customMusic.volume = 0.4; // Slightly lowered so you can hear the voice clearly
 
 // Sound Effects
 function playChimeSFX(freq = 523.25) {
@@ -22,6 +22,47 @@ function playChimeSFX(freq = 523.25) {
         osc.start();
         osc.stop(ctx.currentTime + 0.5);
     } catch(e) {}
+}
+
+/* =========================================================
+   TEXT-TO-SPEECH (BEAUTIFUL GIRL VOICE)
+   ========================================================= */
+function getBeautifulGirlVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return null;
+
+    return voices.find(v => v.lang.startsWith('en') && (
+        v.name.includes('Google UK English Female') ||
+        v.name.includes('Samantha') ||
+        v.name.includes('Victoria') ||
+        v.name.includes('Zira') ||
+        v.name.includes('Karen') ||
+        v.name.includes('Female') ||
+        v.name.includes('Natural') ||
+        v.name.includes('Siri')
+    )) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+}
+
+function speakNarration(text) {
+    if (isMuted || !('speechSynthesis' in window)) return;
+    try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        utterance.rate = 0.92;
+        utterance.pitch = 1.25;
+        utterance.volume = 1.0;
+        
+        const girlVoice = getBeautifulGirlVoice();
+        if (girlVoice) utterance.voice = girlVoice;
+
+        window.speechSynthesis.speak(utterance);
+    } catch(e) {}
+}
+
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = () => getBeautifulGirlVoice();
 }
 
 // Security / Lock Screen Logic
@@ -48,6 +89,7 @@ function toggleMute() {
     if (isMuted) {
         icon.className = 'fas fa-volume-mute text-gray-400';
         customMusic.pause();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     } else {
         icon.className = 'fas fa-volume-up text-yellow-400';
         customMusic.play();
@@ -150,9 +192,15 @@ let activeScreenId = 'screen-lock';
 function startMasterJourney() {
     playChimeSFX(587.33);
     nextScreen('screen-prologue', () => {
+        // First Voice Trigger
+        speakNarration("Hey Shrawan! Wishing you a very Happy Birthday! Today is your special day, filled with joy, magic, and endless growth.");
+        
         typeWriter('typed-prologue', [ "Every life is a beautiful journey...", "A story of growth, passion, and big dreams." ], 45, () => {
             setTimeout(() => {
                 nextScreen('screen-hero', () => {
+                    // Second Voice Trigger
+                    speakNarration("Happy Birthday Shrawan! May your new chapter bring you unlimited success, immense happiness, and peace.");
+                    
                     typeWriter('typed-hero', [ "Today is not just my birthday.", "Today is a celebration of every dream I've chased.", "Every lesson I've learned, and every win ahead." ], 35);
                 });
             }, 1200);
@@ -181,7 +229,6 @@ function nextScreen(targetId, onCompleteCallback) {
 
                 gsap.fromTo(nextEl, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out", onComplete: onCompleteCallback });
 
-                // DYNAMIC GSAP STAGGER FOR GALLERY
                 if (targetId === 'screen-gallery') {
                     gsap.fromTo('.gallery-item', 
                         { scale: 0, rotation: () => gsap.utils.random(-30, 30), opacity: 0, y: 100 },
@@ -238,7 +285,12 @@ function runCountdown() {
 // Finale & Fireworks
 let fireworksActive = false; let particles = [];
 function launchFinaleScreen() {
-    nextScreen('screen-finale'); startFireworks();
+    nextScreen('screen-finale'); 
+    
+    // Third Voice Trigger
+    speakNarration("Happy Birthday once again Shrawan! May all your wishes come true and your future shine bright!");
+    
+    startFireworks();
     if (window.confetti) {
         const duration = 12 * 1000; const end = Date.now() + duration;
         (function frame() {
