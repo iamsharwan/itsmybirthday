@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shrawan | Birthday Celebration 2026</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 3D Canvas Background & Fireworks Layer -->
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="fireworks-canvas"></canvas>
+
+    <!-- Glowing Nebula Background Atmosphere -->
+    <div class="nebula-container">
+        <div class="nebula-blob blob-1"></div>
+        <div class="nebula-blob blob-2"></div>
+        <div class="nebula-blob blob-3"></div>
+    </div>
+
+    <div class="lens-flare" id="lens-flare" style="top: 20%; left: 50%;"></div>
+    <div id="transition-flash"></div>
+
+    <!-- Widgets -->
+    <div id="live-clock-widget">
+        <i class="fas fa-sparkles text-yellow-400 animate-spin" style="animation-duration: 6s;"></i>
+        <span id="clock-date">5 AUG 2026</span>
+        <span class="text-white/40">|</span>
+        <span id="clock-time">11:59:30 PM</span>
+    </div>
+
+    <div id="countdown-12-widget">
+        <i class="fas fa-clock text-yellow-400 animate-pulse"></i>
+        <span class="hidden sm:inline text-xs text-yellow-200 font-mono tracking-wider uppercase">12 O'CLOCK:</span>
+        <span id="timer-12-display" class="font-extrabold font-mono text-yellow-400 glow-gold">00m 30s TO 12 AM</span>
+    </div>
+
+    <button id="sound-toggle" onclick="toggleMute()" title="Toggle Sound">
+        <i class="fas fa-volume-up text-sm sm:text-lg text-yellow-400" id="sound-icon"></i>
+    </button>
+
+    <!-- SCREEN 0: THE LOCK SCREEN -->
+    <div id="screen-lock" class="screen active z-[100] bg-black/95 backdrop-blur-3xl">
+        <div class="max-w-md w-full px-6 flex flex-col items-center">
+            <div class="p-5 rounded-full bg-yellow-500/10 border border-yellow-500/30 mb-6 animate-pulse">
+                <i class="fas fa-lock text-3xl text-yellow-400"></i>
+            </div>
+            <h2 class="font-serif-title text-3xl sm:text-4xl text-white mb-2 glow-text-white">Secure Access</h2>
+            
+            <p class="text-gray-400 text-xs sm:text-sm font-light mb-8 tracking-widest uppercase text-center">
+                Hint: The year the journey began <br><span class="text-yellow-400/70 text-[10px]">(4 digits)</span>
+            </p>
+            
+            <input type="password" id="birthday-passcode" 
+                   class="w-full bg-black/50 border border-yellow-500/30 rounded-xl px-6 py-4 text-center text-2xl text-yellow-300 focus:outline-none focus:border-yellow-400 focus:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all tracking-[0.5em] font-mono" 
+                   placeholder="••••" autocomplete="off">
+            
+            <button onclick="unlockExperience()" class="btn-cinematic mt-8 w-full justify-center">
+                <span>Authenticate</span>
+                <i class="fas fa-fingerprint"></i>
+            </button>
+            <p id="lock-error" class="text-red-400 text-xs font-mono mt-4 opacity-0 transition-opacity">INCORRECT PASSPHRASE.</p>
+        </div>
+    </div>
+
+    <!-- SCREEN 0.5: CINEMATIC START GATEWAY -->
+    <div id="screen-start" class="screen z-50 bg-black/90 backdrop-blur-2xl">
+        <div class="max-w-2xl px-2 sm:px-4 flex flex-col items-center relative">
+            <div class="inline-block p-4 sm:p-5 rounded-full bg-yellow-500/10 border border-yellow-500/30 mb-4 sm:mb-6 animate-pulse">
+                <i class="fas fa-crown text-3xl sm:text-4xl text-yellow-400"></i>
+            </div>
+            <h1 class="font-serif-title text-3xl sm:text-6xl font-bold mb-3 tracking-tight glow-text-white">
+                A Magical Surprise Awaits
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-lg font-light mb-2 tracking-widest uppercase">
+                Crafted For <span class="text-yellow-400 font-semibold">Shrawan</span> • 6 August 1999
+            </p>
+            <button class="btn-cinematic" onclick="startMasterJourney()">
+                <span>Unveil The Surprise</span>
+                <i class="fas fa-sparkles text-xs sm:text-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 1: OPENING PROLOGUE -->
+    <div id="screen-prologue" class="screen">
+        <div class="max-w-3xl px-2">
+            <h2 id="typed-prologue" class="font-handwriting text-3xl sm:text-6xl text-yellow-300 leading-relaxed glow-gold min-h-[140px]"></h2>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: MAIN HERO -->
+    <div id="screen-hero" class="screen">
+        <div class="max-w-4xl mx-auto flex flex-col items-center px-2">
+            <div class="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 bg-white/5 border border-white/10 px-4 sm:px-6 py-1 sm:py-1.5 rounded-full backdrop-blur-md">
+                <i class="fas fa-star text-yellow-400 text-[10px] sm:text-xs"></i>
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-yellow-200">Special Celebration Day</span>
+                <i class="fas fa-star text-yellow-400 text-[10px] sm:text-xs"></i>
+            </div>
+            <h1 class="font-serif-title text-4xl sm:text-7xl font-black mb-1 tracking-tight text-white glow-text-white">Happy Birthday</h1>
+            <h2 class="text-3xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500 mb-2 tracking-wider">SHRAWAN</h2>
+            
+            <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-4 my-2 px-4 sm:px-6 py-2 rounded-2xl bg-yellow-500/10 border border-yellow-500/30">
+                <span class="text-[10px] sm:text-xs text-gray-300 font-mono">BORN: 6 AUG 1999</span>
+                <span class="text-yellow-400 font-bold hidden xs:inline">→</span>
+                <span id="age-counter" class="text-xs sm:text-sm font-extrabold text-yellow-300 font-mono tracking-wider">26 YEARS COMPLETED</span>
+                <span class="text-yellow-400 font-bold hidden xs:inline">→</span>
+                <span class="text-[10px] sm:text-xs font-black text-amber-400 font-mono">CHAPTER 27 ✨</span>
+            </div>
+
+            <div class="h-20 max-w-2xl flex items-center justify-center">
+                <p id="typed-hero" class="text-sm sm:text-xl text-gray-300 italic font-light leading-relaxed"></p>
+            </div>
+
+            <button class="btn-cinematic" onclick="nextScreen('screen-timeline')">
+                <span>Begin My Birthday Journey</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: TIMELINE -->
+    <div id="screen-timeline" class="screen">
+        <div class="max-w-5xl w-full px-2">
+            <span class="text-yellow-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] sm:tracking-[0.4em] mb-1 block">The Life Journey</span>
+            <h2 class="font-serif-title text-2xl sm:text-5xl font-bold mb-6 sm:mb-8">The Story of My Journey</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full">
+                <div class="glass-card flex flex-col justify-between h-48 border-yellow-500/30">
+                    <div>
+                        <span class="text-xl font-black text-yellow-400 font-mono uppercase">6 AUG 1999</span>
+                        <h4 class="text-base font-bold mt-1">Born / Origin</h4>
+                    </div>
+                    <p class="text-xs text-gray-300">The journey began. A life full of curiosity and potential was born.</p>
+                </div>
+                <div class="glass-card flex flex-col justify-between h-48 border-blue-500/30">
+                    <div>
+                        <span class="text-2xl font-black text-blue-400 font-mono">2015</span>
+                        <h4 class="text-base font-bold mt-1">Dreams Taking Shape</h4>
+                    </div>
+                    <p class="text-xs text-gray-300">Discovering technology, building foundational passions and big aspirations.</p>
+                </div>
+                <div class="glass-card flex flex-col justify-between h-48 border-emerald-500/30">
+                    <div>
+                        <span class="text-2xl font-black text-emerald-400 font-mono">2024</span>
+                        <h4 class="text-base font-bold mt-1">Engineering Mastery</h4>
+                    </div>
+                    <p class="text-xs text-gray-300">Mastering cloud architecture, scaling complex code, and overcoming hurdles.</p>
+                </div>
+                <div class="glass-card flex flex-col justify-between h-48 border-purple-500/30">
+                    <div>
+                        <span class="text-2xl font-black text-purple-400 font-mono">2026</span>
+                        <h4 class="text-base font-bold mt-1">Chapter 27 & Beyond</h4>
+                    </div>
+                    <p class="text-xs text-gray-300">Unstoppable growth, high global goals, and building an inspiring legacy.</p>
+                </div>
+            </div>
+
+            <button class="btn-cinematic" onclick="nextScreen('screen-bento')">
+                <span>Continue</span>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: BENTO GRID -->
+    <div id="screen-bento" class="screen">
+        <div class="max-w-5xl w-full px-2">
+            <span class="text-yellow-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] sm:tracking-[0.4em] mb-1 block">Personal Milestones</span>
+            <h2 class="font-serif-title text-2xl sm:text-5xl font-bold mb-4 sm:mb-6">Things I'm Proud Of</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 text-left">
+                <div class="glass-card sm:col-span-2 flex items-center gap-3 sm:gap-4 border-blue-500/30">
+                    <div class="p-3 sm:p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 text-2xl sm:text-3xl">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-xl font-bold mb-0.5 text-white">Senior IT & Engineering Specialist</h3>
+                        <p class="text-gray-300 text-[11px] sm:text-xs">Architecting high-scale IT infrastructure, solving complex software challenges daily.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card flex flex-col justify-center border-cyan-500/30">
+                    <i class="fas fa-cloud text-xl text-cyan-400 mb-1.5"></i>
+                    <h3 class="text-sm font-bold mb-0.5">Cloud Ecosystems</h3>
+                    <p class="text-gray-300 text-[11px]">Designing scalable cloud environments.</p>
+                </div>
+
+                <div class="glass-card flex flex-col justify-center border-rose-500/30">
+                    <i class="fas fa-heart text-xl text-rose-500 mb-1.5"></i>
+                    <h3 class="text-sm font-bold mb-0.5">Kind & Humble Heart</h3>
+                    <p class="text-gray-300 text-[11px]">Staying grounded and helping others always.</p>
+                </div>
+
+                <div class="glass-card flex flex-col justify-center border-amber-500/30">
+                    <i class="fas fa-fire text-xl text-amber-400 mb-1.5"></i>
+                    <h3 class="text-sm font-bold mb-0.5">Unbreakable Drive</h3>
+                    <p class="text-gray-300 text-[11px]">Transforming obstacles into triumphs.</p>
+                </div>
+
+                <div class="glass-card flex flex-col justify-center border-purple-500/30">
+                    <i class="fas fa-globe text-xl text-purple-400 mb-1.5"></i>
+                    <h3 class="text-sm font-bold mb-0.5">Massive Horizons</h3>
+                    <p class="text-gray-300 text-[11px]">Aiming for infinite growth ahead.</p>
+                </div>
+            </div>
+
+            <button class="btn-cinematic" onclick="nextScreen('screen-gallery')">
+                <span>View Photo Gallery</span>
+                <i class="fas fa-camera"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: ANIMATED 12+ PHOTO GALLERY -->
+    <div id="screen-gallery" class="screen">
+        <div class="max-w-6xl w-full px-2 flex flex-col h-full justify-center">
+            <span class="text-yellow-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] mb-1 block">Memory Logs</span>
+            <h2 class="font-serif-title text-2xl sm:text-5xl font-bold mb-6">Moments & Memories</h2>
+
+            <!-- Scrollable Container -->
+            <div class="gallery-scroll-wrapper w-full flex-grow max-h-[60vh] overflow-y-auto px-4 pb-10">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="photo-grid">
+                    
+                    <!-- Photos 1 to 12+ -->
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo1.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo2.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo3.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo4.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo5.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo6.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo7.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo8.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo9.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo10.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo11.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                        <img src="assets/photo12.jpeg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button class="btn-cinematic" onclick="nextScreen('screen-letter')">
+                    <span>Read Special Letter</span>
+                    <i class="fas fa-envelope"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 6: HEARTFELT LETTER -->
+    <div id="screen-letter" class="screen">
+        <div class="max-w-2xl w-full glass-card p-5 sm:p-10 text-center border-yellow-500/30 relative">
+            <h2 class="font-handwriting text-3xl sm:text-5xl text-yellow-300 mb-3 sm:mb-4">Dear Shrawan,</h2>
+            <div class="space-y-2 sm:space-y-3 text-gray-200 text-xs sm:text-base font-light leading-relaxed italic">
+                <p>Today you celebrate another milestone of life—not just getting older, but becoming stronger, wiser, and more focused on what truly matters.</p>
+                <p>Be proud of every obstacle you quietly overcame, every late night you worked hard, and every dream you held onto.</p>
+                <p class="text-yellow-300 font-semibold text-sm sm:text-lg not-italic pt-1">"I believe my greatest achievements are still waiting for me."</p>
+            </div>
+            <button class="btn-cinematic mt-4 sm:mt-6" onclick="nextScreen('screen-cake')">
+                <span>One Last Surprise</span>
+                <i class="fas fa-gift"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 7: CAKE -->
+    <div id="screen-cake" class="screen">
+        <div class="max-w-xl w-full flex flex-col items-center">
+            <h2 class="font-serif-title text-3xl sm:text-5xl font-bold mb-1 tracking-tight text-white glow-text-white">Celebrate The Magic</h2>
+            <p class="text-yellow-300 text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] sm:tracking-[0.35em] mb-3 sm:mb-4">CLOSE YOUR EYES & EMBRACE CHAPTER 27</p>
+
+            <div class="cake-container mb-3 sm:mb-4" id="cake-box">
+                <i class="fas fa-utensils text-yellow-400" id="knife-element"></i>
+                <svg id="cake-svg" viewBox="0 0 320 320" class="w-full h-full drop-shadow-[0_25px_60px_rgba(255,215,0,0.35)]">
+                    <ellipse cx="160" cy="280" rx="130" ry="22" fill="rgba(255, 215, 0, 0.25)" />
+                    <ellipse cx="160" cy="270" rx="120" ry="20" fill="#e2e8f0" />
+                    <ellipse cx="160" cy="265" rx="110" ry="16" fill="#ffffff" />
+                    <g id="cake-left">
+                        <path d="M 50,190 Q 105,205 160,205 L 160,265 Q 105,265 50,250 Z" fill="#3b0764"/>
+                        <path d="M 50,190 Q 105,205 160,205 L 160,212 Q 105,212 50,202 Z" fill="#581c87"/>
+                        <path d="M 50,190 Q 70,210 90,193 Q 110,213 130,191 Q 145,210 160,192 L 160,205 Q 105,205 50,190 Z" fill="#ffd700"/>
+                        <path d="M 75,135 Q 117.5,147 160,147 L 160,197 Q 117.5,197 75,185 Z" fill="#701a75"/>
+                        <path d="M 75,135 Q 117.5,147 160,147 L 160,154 Q 117.5,154 75,144 Z" fill="#a21caf"/>
+                        <path d="M 95,85 Q 127.5,95 160,95 L 160,142 Q 127.5,142 95,132 Z" fill="#be185d"/>
+                        <path d="M 95,85 Q 127.5,95 160,95 L 160,90 Q 127.5,90 95,85 Z" fill="#f43f5e"/>
+                        <rect x="120" y="45" width="8" height="42" rx="3" fill="#fbbf24"/>
+                        <line x1="124" y1="45" x2="124" y2="38" stroke="#000" stroke-width="2"/>
+                    </g>
+                    <g id="cake-right">
+                        <path d="M 160,205 Q 215,205 270,190 L 270,250 Q 215,265 160,265 Z" fill="#3b0764"/>
+                        <path d="M 160,205 Q 215,205 270,190 L 270,202 Q 215,212 160,212 Z" fill="#581c87"/>
+                        <path d="M 160,192 Q 175,210 190,191 Q 210,213 230,193 Q 250,210 270,190 L 270,190 Q 215,205 160,205 Z" fill="#ffd700"/>
+                        <path d="M 160,147 Q 202.5,147 245,135 L 245,185 Q 202.5,197 160,197 Z" fill="#701a75"/>
+                        <path d="M 160,147 Q 202.5,147 245,135 L 245,144 Q 202.5,154 160,154 Z" fill="#a21caf"/>
+                        <path d="M 160,95 Q 192.5,95 225,85 L 225,132 Q 192.5,142 160,142 Z" fill="#be185d"/>
+                        <path d="M 160,95 Q 192.5,95 225,85 L 225,90 Q 192.5,90 160,90 Z" fill="#f43f5e"/>
+                        <rect x="192" y="45" width="8" height="42" rx="3" fill="#fbbf24"/>
+                        <line x1="196" y1="45" x2="196" y2="38" stroke="#000" stroke-width="2"/>
+                    </g>
+                    <rect x="156" y="32" width="8" height="55" rx="3" fill="#f43f5e"/>
+                    <line x1="160" y1="32" x2="160" y2="24" stroke="#000" stroke-width="2"/>
+                </svg>
+                <div class="candle-flame absolute top-[18px] left-[118px]"></div>
+                <div class="candle-flame absolute top-[4px] left-[154px] scale-125" id="center-flame"></div>
+                <div class="candle-flame absolute top-[18px] left-[190px]"></div>
+            </div>
+
+            <button id="cut-btn" class="btn-cinematic" onclick="cutBirthdayCake()">
+                <span>🎂 Cut My Birthday Cake</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 8: GRAND FINALE -->
+    <div id="screen-finale" class="screen">
+        <div class="max-w-3xl mx-auto z-20 flex flex-col items-center">
+            <h1 class="font-serif-title text-3xl sm:text-7xl font-black mb-1 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500 glow-gold">Happy Birthday</h1>
+            <h2 class="text-2xl sm:text-6xl font-black text-white mb-2 tracking-wide glow-text-white flex items-center gap-2">SHRAWAN <span class="text-red-500 animate-pulse">❤️</span></h2>
+            <p class="text-xs sm:text-lg font-mono text-yellow-300 mb-4">6 AUGUST 1999 • CHAPTER 27</p>
+
+            <div class="glass-card max-w-2xl mx-auto mb-6 text-center p-7 bg-black/60 border-yellow-500/40 shadow-2xl">
+                <p class="text-gray-200 text-xs sm:text-base font-light italic leading-relaxed">
+                    "Today I celebrate not just another birthday, but every challenge that made me stronger, every lesson that helped me grow, and every dream that continues to inspire me."
+                </p>
+                <h3 class="font-serif-title text-lg sm:text-2xl font-bold text-yellow-400 mt-4">Happy Birthday to Me 🎂<span class="text-red-500">❤️</span></h3>
+            </div>
+            
+            <div class="text-gray-300 text-xs sm:text-sm uppercase tracking-[0.3em] font-mono text-center space-y-1">
+                <p>Keep smiling. Keep believing.</p>
+                <p class="text-yellow-400 font-semibold">The best chapter is only just beginning.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="script.js"></script>
+</body>
+</html>
