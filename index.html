@@ -239,6 +239,7 @@
     </div>
 
     <!-- SCREEN 5: ANIMATED 12+ PHOTO GALLERY -->
+<!-- SCREEN 5: ANIMATED 12+ PHOTO GALLERY -->
     <div id="screen-gallery" class="screen">
         <div class="max-w-6xl w-full px-2 flex flex-col h-full justify-center">
             <span class="text-yellow-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] mb-1 block">Memory Logs</span>
@@ -330,15 +331,23 @@
                 </div>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 z-10 relative">
                 <button class="btn-cinematic" onclick="nextScreen('screen-letter')">
                     <span>Read Special Letter</span>
                     <i class="fas fa-envelope"></i>
                 </button>
             </div>
+
+            <!-- THE LIGHTBOX OVERLAY (NEW) -->
+            <div id="lightbox" class="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center p-4 cursor-pointer" onclick="closeLightbox()">
+                <div class="absolute top-6 right-6 text-white text-4xl hover:text-yellow-400 transition-colors">
+                    <i class="fas fa-times"></i>
+                </div>
+                <img id="lightbox-img" src="" alt="Enlarged Memory" class="max-w-full max-h-[85vh] object-contain rounded-lg border-2 border-yellow-500/30 shadow-[0_0_50px_rgba(255,215,0,0.15)]">
+            </div>
+
         </div>
     </div>
-
     <!-- SCREEN 6: HEARTFELT LETTER -->
     <div id="screen-letter" class="screen">
         <div class="max-w-2xl w-full glass-card p-5 sm:p-10 text-center border-yellow-500/30 relative">
