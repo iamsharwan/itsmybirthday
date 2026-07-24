@@ -1,7 +1,7 @@
 let isMuted = false;
 
 // Custom Music Init
-const customMusic = new Audio('assets/music.mp4'); 
+const customMusic = new Audio('assets/music.mp3'); 
 customMusic.loop = true;
 customMusic.volume = 0.4; // Slightly lowered so you can hear the voice clearly
 
