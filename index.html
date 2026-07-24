@@ -58,9 +58,10 @@
             </div>
             <h2 class="font-serif-title text-3xl sm:text-4xl text-white mb-2 glow-text-white">Secure Access</h2>
             
-            <p class="text-gray-400 text-xs sm:text-sm font-light mb-8 tracking-widest uppercase text-center">
-                Hint: The year the journey began <br><span class="text-yellow-400/70 text-[10px]">(4 digits)</span>
-            </p>
+           <p class="text-gray-300 text-xs sm:text-sm font-light mb-8 tracking-widest text-center leading-relaxed">
+    <span class="uppercase">Hint: Just type</span> <span class="text-yellow-400 font-bold font-mono text-base">1999</span> <span class="uppercase">or</span> <span class="text-yellow-400 font-bold font-mono text-base">shrawan</span> <span class="uppercase">to enter</span><br>
+    <span class="text-white/40 text-[10px] tracking-normal lowercase">(No secret codes needed for friends & family!)</span>
+</p>
             
             <input type="password" id="birthday-passcode" 
                    class="w-full bg-black/50 border border-yellow-500/30 rounded-xl px-6 py-4 text-center text-2xl text-yellow-300 focus:outline-none focus:border-yellow-400 focus:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all tracking-[0.5em] font-mono" 
@@ -75,21 +76,32 @@
     </div>
 
     <!-- SCREEN 0.5: CINEMATIC START GATEWAY -->
+<!-- SCREEN 0.5: CINEMATIC START GATEWAY -->
     <div id="screen-start" class="screen z-50 bg-black/90 backdrop-blur-2xl">
         <div class="max-w-2xl px-2 sm:px-4 flex flex-col items-center relative">
+            
             <div class="inline-block p-4 sm:p-5 rounded-full bg-yellow-500/10 border border-yellow-500/30 mb-4 sm:mb-6 animate-pulse">
                 <i class="fas fa-crown text-3xl sm:text-4xl text-yellow-400"></i>
             </div>
+            
             <h1 class="font-serif-title text-3xl sm:text-6xl font-bold mb-3 tracking-tight glow-text-white">
                 A Magical Surprise Awaits
             </h1>
-            <p class="text-gray-400 text-xs sm:text-lg font-light mb-2 tracking-widest uppercase">
-                Crafted For <span class="text-yellow-400 font-semibold">Shrawan</span> • 6 August 1999
+            
+            <p class="text-gray-400 text-xs sm:text-lg font-light mb-4 sm:mb-6 tracking-widest uppercase">
+                Crafted For <span class="text-yellow-400 font-semibold">Shrawan Gupta</span> • 6 August 1999
             </p>
+            
+            <!-- THE RESTORED INSTRUCTION BOX -->
+            <div class="text-[10px] sm:text-xs font-mono text-yellow-300/80 bg-white/5 border border-white/10 px-4 sm:px-5 py-2 rounded-full mb-6 sm:mb-8 shadow-[0_0_15px_rgba(255,215,0,0.1)]">
+                ✨ Press <span class="text-white font-bold text-sm mx-1">H</span> (Hearts) • <span class="text-white font-bold text-sm mx-1">B</span> (Balloons) • <span class="text-white font-bold text-sm mx-1">C</span> (Confetti) ✨
+            </div>
+
             <button class="btn-cinematic" onclick="startMasterJourney()">
                 <span>Unveil The Surprise</span>
                 <i class="fas fa-sparkles text-xs sm:text-sm"></i>
             </button>
+            
         </div>
     </div>
 
