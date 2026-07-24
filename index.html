@@ -58,10 +58,10 @@
             </div>
             <h2 class="font-serif-title text-3xl sm:text-4xl text-white mb-2 glow-text-white">Secure Access</h2>
             
-           <p class="text-gray-300 text-xs sm:text-sm font-light mb-8 tracking-widest text-center leading-relaxed">
-    <span class="uppercase">Hint: Just type</span> <span class="text-yellow-400 font-bold font-mono text-base">1999</span> <span class="uppercase">or</span> <span class="text-yellow-400 font-bold font-mono text-base">shrawan</span> <span class="uppercase">to enter</span><br>
-    <span class="text-white/40 text-[10px] tracking-normal lowercase">(No secret codes needed for friends & family!)</span>
-</p>
+            <p class="text-gray-300 text-xs sm:text-sm font-light mb-8 tracking-widest text-center leading-relaxed">
+                <span class="uppercase">Hint: Just type</span> <span class="text-yellow-400 font-bold font-mono text-base">1999</span> <span class="uppercase">or</span> <span class="text-yellow-400 font-bold font-mono text-base">shrawan</span> <span class="uppercase">to enter</span><br>
+                <span class="text-white/40 text-[10px] tracking-normal lowercase">(No secret codes needed for friends & family!)</span>
+            </p>
             
             <input type="password" id="birthday-passcode" 
                    class="w-full bg-black/50 border border-yellow-500/30 rounded-xl px-6 py-4 text-center text-2xl text-yellow-300 focus:outline-none focus:border-yellow-400 focus:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all tracking-[0.5em] font-mono" 
@@ -76,7 +76,6 @@
     </div>
 
     <!-- SCREEN 0.5: CINEMATIC START GATEWAY -->
-<!-- SCREEN 0.5: CINEMATIC START GATEWAY -->
     <div id="screen-start" class="screen z-50 bg-black/90 backdrop-blur-2xl">
         <div class="max-w-2xl px-2 sm:px-4 flex flex-col items-center relative">
             
@@ -142,40 +141,44 @@
         </div>
     </div>
 
-    <!-- SCREEN 3: TIMELINE -->
+    <!-- SCREEN 3: TIMELINE (MOBILE RESPONSIVE FIXED) -->
     <div id="screen-timeline" class="screen">
         <div class="max-w-5xl w-full px-2">
             <span class="text-yellow-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] sm:tracking-[0.4em] mb-1 block">The Life Journey</span>
             <h2 class="font-serif-title text-2xl sm:text-5xl font-bold mb-6 sm:mb-8">The Story of My Journey</h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full">
-                <div class="glass-card flex flex-col justify-between h-48 border-yellow-500/30">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                
+                <div class="glass-card flex flex-col justify-center sm:justify-between min-h-[130px] sm:h-48 border-yellow-500/30">
                     <div>
                         <span class="text-xl font-black text-yellow-400 font-mono uppercase">6 AUG 1999</span>
                         <h4 class="text-base font-bold mt-1">Born / Origin</h4>
                     </div>
-                    <p class="text-xs text-gray-300">The journey began. A life full of curiosity and potential was born.</p>
+                    <p class="text-xs text-gray-300 mt-2 sm:mt-0">The journey began. A life full of curiosity and potential was born.</p>
                 </div>
-                <div class="glass-card flex flex-col justify-between h-48 border-blue-500/30">
+                
+                <div class="glass-card flex flex-col justify-center sm:justify-between min-h-[130px] sm:h-48 border-blue-500/30">
                     <div>
                         <span class="text-2xl font-black text-blue-400 font-mono">2015</span>
                         <h4 class="text-base font-bold mt-1">Dreams Taking Shape</h4>
                     </div>
-                    <p class="text-xs text-gray-300">Discovering technology, building foundational passions and big aspirations.</p>
+                    <p class="text-xs text-gray-300 mt-2 sm:mt-0">Discovering technology, building foundational passions and big aspirations.</p>
                 </div>
-                <div class="glass-card flex flex-col justify-between h-48 border-emerald-500/30">
+                
+                <div class="glass-card flex flex-col justify-center sm:justify-between min-h-[130px] sm:h-48 border-emerald-500/30">
                     <div>
                         <span class="text-2xl font-black text-emerald-400 font-mono">2024</span>
                         <h4 class="text-base font-bold mt-1">Engineering Mastery</h4>
                     </div>
-                    <p class="text-xs text-gray-300">Mastering cloud architecture, scaling complex code, and overcoming hurdles.</p>
+                    <p class="text-xs text-gray-300 mt-2 sm:mt-0">Mastering cloud architecture, scaling complex code, and overcoming hurdles.</p>
                 </div>
-                <div class="glass-card flex flex-col justify-between h-48 border-purple-500/30">
+                
+                <div class="glass-card flex flex-col justify-center sm:justify-between min-h-[130px] sm:h-48 border-purple-500/30">
                     <div>
                         <span class="text-2xl font-black text-purple-400 font-mono">2026</span>
                         <h4 class="text-base font-bold mt-1">Chapter 27 & Beyond</h4>
                     </div>
-                    <p class="text-xs text-gray-300">Unstoppable growth, high global goals, and building an inspiring legacy.</p>
+                    <p class="text-xs text-gray-300 mt-2 sm:mt-0">Unstoppable growth, high global goals, and building an inspiring legacy.</p>
                 </div>
             </div>
 
@@ -245,7 +248,7 @@
             <div class="gallery-scroll-wrapper w-full flex-grow max-h-[60vh] overflow-y-auto px-4 pb-10">
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="photo-grid">
                     
-                    <!-- Photos 1 to 12+ -->
+                    <!-- Photos 1 to 26 -->
                     <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo1.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -285,43 +288,43 @@
                     <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo13.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo14.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo15.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo16.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo17.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo18.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo19.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo20.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo21.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo22.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo23.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo24.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo25.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
-                       <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
+                    <div class="gallery-item glass-card p-1 h-32 sm:h-40 md:h-48 border-white/20 relative group">
                         <img src="assets/photo26.jpg" alt="Memory" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
                     </div>
                 </div>
