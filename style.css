@@ -22,13 +22,11 @@ body, html {
     background-color: var(--dark-bg);
     background-image: linear-gradient(rgba(2, 2, 5, 0.75), rgba(2, 2, 5, 0.75)), url('assets/bgphoto.png');
     background-size: cover;
-    
-    /* Adjusted to keep the top of the photo (your face) visible on wide screens */
     background-position: center 15%; 
-    
     background-repeat: no-repeat;
     
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    /* NEW STYLISH BODY FONT */
+    font-family: 'Outfit', sans-serif;
     color: #ffffff;
     cursor: auto;
 }
@@ -81,8 +79,31 @@ body, html {
     width: 100%;
 }
 
-.font-serif-title { font-family: 'Playfair Display', serif; }
-.font-handwriting { font-family: 'Dancing Script', cursive; }
+/* NEW LUXURY FONTS */
+.font-serif-title { 
+    font-family: 'Cinzel Decorative', serif; 
+    letter-spacing: 1px;
+}
+.font-handwriting { 
+    font-family: 'Great Vibes', cursive; 
+    font-size: 1.3em;
+    letter-spacing: 2px;
+}
+
+/* ANIMATED GOLD TEXT CLASS */
+.animated-gold-text {
+    background: linear-gradient(to right, #FFD700, #FFF8DC, #FFA500, #FFD700);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
 .glow-gold { text-shadow: 0 0 20px var(--gold-glow), 0 0 40px var(--gold-glow); }
 .glow-text-white { text-shadow: 0 0 30px rgba(255,255,255,0.7); }
 
