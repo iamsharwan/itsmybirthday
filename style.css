@@ -17,7 +17,14 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    
+    /* Background Image Setup */
     background-color: var(--dark-bg);
+    background-image: linear-gradient(rgba(2, 2, 5, 0.75), rgba(2, 2, 5, 0.75)), url('assets/bgphoto.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #ffffff;
     cursor: auto;
@@ -37,7 +44,7 @@ body, html {
 
 .nebula-container {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-    pointer-events: none; overflow: hidden; filter: blur(100px); opacity: 0.75;
+    pointer-events: none; overflow: hidden; filter: blur(100px); opacity: 0.4;
 }
 
 .nebula-blob { position: absolute; border-radius: 50%; animation: floatNebula 22s infinite alternate ease-in-out; }
