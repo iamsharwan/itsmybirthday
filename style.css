@@ -22,7 +22,10 @@ body, html {
     background-color: var(--dark-bg);
     background-image: linear-gradient(rgba(2, 2, 5, 0.75), rgba(2, 2, 5, 0.75)), url('assets/bgphoto.png');
     background-size: cover;
-    background-position: center;
+    
+    /* Adjusted to keep the top of the photo (your face) visible on wide screens */
+    background-position: center 15%; 
+    
     background-repeat: no-repeat;
     
     font-family: 'Plus Jakarta Sans', sans-serif;
